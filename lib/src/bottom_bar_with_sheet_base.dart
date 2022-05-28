@@ -90,8 +90,7 @@ class BottomBarWithSheet extends StatefulWidget {
   _BottomBarWithSheetState createState() => _BottomBarWithSheetState();
 }
 
-class _BottomBarWithSheetState extends State<BottomBarWithSheet>
-    with SingleTickerProviderStateMixin {
+class _BottomBarWithSheetState extends State<BottomBarWithSheet> with SingleTickerProviderStateMixin {
   late AnimationController _arrowAnimationController;
   late Animation _arrowAnimation;
   late bool _isOpened;
@@ -100,10 +99,8 @@ class _BottomBarWithSheetState extends State<BottomBarWithSheet>
   @override
   void initState() {
     super.initState();
-    _arrowAnimationController =
-        AnimationController(vsync: this, duration: widget.duration);
-    _arrowAnimation =
-        Tween(begin: 0.0, end: 1.0).animate(_arrowAnimationController);
+    _arrowAnimationController = AnimationController(vsync: this, duration: widget.duration);
+    _arrowAnimation = Tween(begin: 0.0, end: 1.0).animate(_arrowAnimationController);
     _isOpened = widget._controller.isOpened;
     _configBottomControllerListener();
     super.initState();
@@ -111,29 +108,28 @@ class _BottomBarWithSheetState extends State<BottomBarWithSheet>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedContainer(
-      duration: widget.duration,
-      curve: widget.curve,
-      height: _bottomBarHeigth,
-      padding: widget.bottomBarTheme.contentPadding,
-      decoration: widget.bottomBarTheme.decoration,
-      child: Column(
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: _generateItems(),
+    return Column(
+      children: [
+        Expanded(
+          child: AnimatedContainer(
+            duration: widget.duration,
+            curve: widget.curve,
+            height: _bottomBarHeigth,
+            padding: widget.bottomBarTheme.contentPadding,
+            decoration: widget.bottomBarTheme.decoration,
+            child: _isOpened ? widget.sheetChild ?? SizedBox() : SizedBox(),
           ),
-          _isOpened
-              ? Expanded(child: widget.sheetChild ?? SizedBox())
-              : SizedBox()
-        ],
-      ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: _generateItems(),
+        ),
+      ],
     );
   }
 
   void _configBottomControllerListener() {
-    _sub = widget._controller.stream
-        .listen((event) => setState(() => _isOpened = event));
+    _sub = widget._controller.stream.listen((event) => setState(() => _isOpened = event));
   }
 
   List<Widget> _generateItems() {
