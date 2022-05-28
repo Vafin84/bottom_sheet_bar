@@ -108,25 +108,24 @@ class _BottomBarWithSheetState extends State<BottomBarWithSheet> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        AnimatedContainer(
-          duration: widget.duration,
-          curve: widget.curve,
-          height: _bottomBarHeigth,
-          padding: widget.bottomBarTheme.contentPadding,
-          decoration: widget.bottomBarTheme.decoration,
-          child: Column(
-            children: <Widget>[
-              _isOpened ? Expanded(child: widget.sheetChild ?? SizedBox()) : SizedBox(),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: _generateItems(),
-              ),
-            ],
+    return AnimatedContainer(
+      duration: widget.duration,
+      curve: widget.curve,
+      height: _bottomBarHeigth,
+      padding: widget.bottomBarTheme.contentPadding,
+      decoration: widget.bottomBarTheme.decoration,
+      child: Column(
+        children: <Widget>[
+          // _isOpened && !_arrowAnimationController.isCompleted
+          //     ? Expanded(child: widget.sheetChild ?? SizedBox())
+          //     : SizedBox(),
+          Expanded(child: widget.sheetChild ?? SizedBox()),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: _generateItems(),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
